@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+      @apply text-gray-200;
+    } 
+  }
+  
+
+.root {
+    @apply bg-black;
+    @apply h-screen;
+}
+
+.body {
+    @apply h-screen;
+}
