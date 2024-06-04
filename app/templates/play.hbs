@@ -1,1 +1,12 @@
 <Play::Turn @turn={{this.turn}} @onClick={{this.onChangeTurnClick}} />
+
+<div class="grid grid-cols-3 gap-4 m-96" data-testid="board">
+  {{#each this.board as |value index|}}
+    <Play::Square
+      @initialValue={{value}}
+      @turn={{this.turn}}
+      @index={{index}}
+      @onClick={{this.onSquareClick}}
+    />
+  {{/each}}
+</div>
