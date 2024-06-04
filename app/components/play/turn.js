@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-export default class TurnTurnComponent extends Component {
+export default class PlayTurnComponent extends Component {
   get info() {
     const turnText = this.args.turn === 0 ? 'X' : 'O';
     return `Turn: ${turnText}`;
