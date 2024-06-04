@@ -3,17 +3,16 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-      @apply text-gray-200;
-    } 
-  }
-  
-
-.root {
+  html {
+    @apply text-gray-200;
     @apply bg-black;
-    @apply h-screen;
+  }
 }
 
 .body {
-    @apply h-screen;
+  @apply h-screen;
 }
+
+/* .main-gif {
+  background: url('/public/assets/images/main.png');
+} */

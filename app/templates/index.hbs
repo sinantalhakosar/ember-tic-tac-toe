@@ -1,1 +1,36 @@
-<h1>Landing page will be here</h1>
+<div class="container p-8 mx-auto xl:px-0 h-full">
+  <div class="flex items-center justify-center w-full">
+    <div class="max-w-2xl mb-8 flex flex-col gap-10 justify-center">
+      <h1
+        class="text-4xl text-center font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white"
+      >
+        Tic-Tac-Toe
+      </h1>
+      <div class="flex items-center justify-center">
+        <LinkTo
+          @route="play"
+          class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-800 font-large rounded-lg text-lg px-5 py-2.5 me-2 mb-2 focus:outline-none"
+          data-testid="play-button"
+        >
+          Play
+        </LinkTo>
+
+        <LinkTo
+          @route="play-with-ai"
+          class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-800 font-large rounded-lg text-lg px-5 py-2.5 me-2 mb-2 focus:outline-none"
+          data-testid="play-with-ai-button"
+        >
+          Play With AI
+        </LinkTo>
+      </div>
+
+      <img src="../assets/images/main.png" />
+      <p
+        class="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300 text-center"
+      >
+        Tic-tac-toe, noughts and crosses, or Xs and Os is a game for two players
+      </p>
+
+    </div>
+  </div>
+</div>
