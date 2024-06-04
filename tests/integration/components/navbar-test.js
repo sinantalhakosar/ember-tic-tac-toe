@@ -7,7 +7,7 @@ module('Integration | Component | navbar', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders the content inside a navbar', async function (assert) {
-    await render(hbs`<Navbar />`);
+    await render(hbs`<Common::Navbar />`);
 
     assert.dom('[data-testid="navbar"]').exists();
     assert.dom('[data-testid="index"]').exists().hasAttribute('href', '/');
