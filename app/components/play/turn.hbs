@@ -1,15 +1,8 @@
-<div class="flex items-center justify-center">
-  <div class="flex w-2/12 gap-5">
-    {{! Below button is for development purposes }}
-    <button
-      class="rounded-lg p-2 whitespace-nowrap bg-blue-600 hover:bg-blue-700" type="button" {{on "click" this.handleTurnClick}}
-    >
-      Change turn
-    </button>
-    <div
-      class="whitespace-nowrap p-2 border rounded-lg flex items-center justify-center"
-    >
-      <h1>{{this.info}}</h1>
-    </div>
-  </div>
+<div class="flex items-center justify-center mt-10">
+  <h1
+    class="whitespace-nowrap border rounded-lg p-2 w-[25%] text-center
+      {{if (eq @turn 0) 'bg-red-700' 'bg-blue-700'}}"
+  >
+    {{this.info}}
+  </h1>
 </div>
