@@ -6,6 +6,7 @@ export default class PlayRouteController extends Controller {
   @tracked turn = 0;
   boardSize = 9;
   board = Array(this.boardSize).fill(null);
+  @tracked winIndexes = [null, null, null];
 
   @action
   onChangeTurnClick() {
@@ -16,10 +17,10 @@ export default class PlayRouteController extends Controller {
   onSquareClick(player, index) {
     this.board[index] = player;
 
-    const { win, player: winningPlayer } = this.calculateWin();
+    const { result, indexes } = this.calculateWin();
 
-    if (win) {
-      window.alert(`${winningPlayer} Wins!`);
+    if (result) {
+      this.winIndexes = indexes;
       return;
     }
 
@@ -32,24 +33,24 @@ export default class PlayRouteController extends Controller {
     const vertical = this.calculateVerticalWin();
     const diagonal = this.calculateDiagonalWin();
 
-    if (horizontal.win) {
-      return { win: true, player: horizontal.player };
+    if (horizontal.result) {
+      return horizontal;
     }
 
-    if (vertical.win) {
-      return { win: true, player: vertical.player };
+    if (vertical.result) {
+      return vertical;
     }
 
-    if (diagonal.win) {
-      return { win: true, player: diagonal.player };
+    if (diagonal.result) {
+      return diagonal;
     }
 
-    return { win: false };
+    return { result: false };
   }
 
   @action
   calculateHorizontalWin() {
-    let win = false;
+    let win = [null, null, null];
     let player = null;
     const sqrt = Math.sqrt(this.boardSize);
 
@@ -57,68 +58,76 @@ export default class PlayRouteController extends Controller {
       const rowStart = i * sqrt;
       player = this.board[rowStart];
       if (player === null) continue;
-      win = true;
+      win = [rowStart, null, null];
       for (let j = 1; j < sqrt; j++) {
+        win[j] = rowStart + j;
         if (this.board[rowStart + j] !== player) {
-          win = false;
+          win[j] = null;
           break;
         }
       }
-      if (win) return { win, player };
+      if (win.every((idx) => idx !== null))
+        return { result: true, indexes: win, player };
     }
-    return { win, player: null };
+    return { result: false, indexes: [null, null, null], player: null };
   }
 
   @action
   calculateVerticalWin() {
-    let win = false;
+    let win = [null, null, null];
     let player = null;
     const sqrt = Math.sqrt(this.boardSize);
 
     for (let i = 0; i < sqrt; i++) {
       player = this.board[i];
       if (player === null) continue;
-      win = true;
+      win = [i, null, null];
       for (let j = 1; j < sqrt; j++) {
+        win[j] = i + j * sqrt;
         if (this.board[i + j * sqrt] !== player) {
-          win = false;
+          win[j] = null;
           break;
         }
       }
-      if (win) return { win, player };
+      if (win.every((idx) => idx !== null))
+        return { result: true, indexes: win, player };
     }
-    return { win, player: null };
+    return { result: false, indexes: [null, null, null], player: null };
   }
 
   @action
   calculateDiagonalWin() {
-    let win = false;
+    let win = [null, null, null];
     let player = this.board[0];
     const sqrt = Math.sqrt(this.boardSize);
 
     if (player !== null) {
-      win = true;
+      win[0] = 0;
       for (let i = 1; i < sqrt; i++) {
+        win[i] = i * (sqrt + 1);
         if (this.board[i * (sqrt + 1)] !== player) {
-          win = false;
+          win[i] = null;
           break;
         }
       }
-      if (win) return { win, player };
+      if (win.every((idx) => idx !== null))
+        return { result: true, indexes: win, player };
     }
 
-    win = false;
+    win = [null, null, null];
     player = this.board[sqrt - 1];
     if (player !== null) {
-      win = true;
+      win[0] = sqrt - 1;
       for (let i = 1; i < sqrt; i++) {
+        win[i] = (i + 1) * sqrt - i - 1;
         if (this.board[(i + 1) * sqrt - i - 1] !== player) {
-          win = false;
+          win[i] = null;
           break;
         }
       }
-      if (win) return { win, player };
+      if (win.every((idx) => idx !== null))
+        return { result: true, indexes: win, player };
     }
-    return { win, player: null };
+    return { result: false, indexes: [null, null, null], player: null };
   }
 }

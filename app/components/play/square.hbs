@@ -1,3 +1,14 @@
-<div class="w-full h-0 pb-full relative border border-white text-center pb-[100%] hover:bg-gray-800" {{on "click" this.handleClick}} data-testid="square">
-  {{this.value}}
+<div
+  class="w-full h-0 pb-full relative border border-white text-center pb-[100%] {{if @winningSquare 'bg-green-800' 'hover:bg-gray-800'}}"
+  {{on "click" this.handleClick}}
+  data-testid="square"
+>
+  {{#unless (eq this.value null)}}
+    {{#if (eq this.value 'X')}}
+      <img src="../assets/images/XSymbol.png" class="p-8" />
+    {{else}}
+      <img src="../assets/images/OSymbol.png" class="p-8" />
+    {{/if}}
+  {{/unless}}
+
 </div>
