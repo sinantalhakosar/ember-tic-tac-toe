@@ -1,9 +1,38 @@
-// tests/unit/routes/play-test.js
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-tic-tac-toe/tests/helpers';
 
 module('Unit | Controller | play', function (hooks) {
   setupTest(hooks);
+
+  test('it opens dialog on win', function (assert) {
+    let controller = this.owner.lookup('controller:play');
+
+    controller.set('board', ['X', 'X', null, 'O', 'O', null, null, null, null]);
+    controller.set('turn', 'X');
+    controller.set('winIndexes', [null, null, null]);
+
+    controller.onSquareClick('X', 2);
+
+    assert.true(
+      controller.get('isWinDialogOpen'),
+      'Dialog should be open on win',
+    );
+  });
+
+  test('it does not open dialog on no win', function (assert) {
+    let controller = this.owner.lookup('controller:play');
+
+    controller.set('board', ['X', 'X', null, 'O', 'O', null, null, null, null]);
+    controller.set('turn', 'X');
+    controller.set('winIndexes', [null, null, null]);
+
+    controller.onSquareClick('X', 8);
+
+    assert.false(
+      controller.get('isWinDialogOpen'),
+      'Dialog should not be open on no win',
+    );
+  });
 
   test('calculateHorizontalWin works correctly', function (assert) {
     let controller = this.owner.lookup('controller:play');
