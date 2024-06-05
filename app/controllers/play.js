@@ -1,12 +1,40 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
 
 export default class PlayRouteController extends Controller {
-  @tracked turn = 0;
   boardSize = 9;
   board = Array(this.boardSize).fill(null);
+  @tracked turn = 0;
   @tracked winIndexes = [null, null, null];
+  @tracked isWinDialogOpen = false;
+
+  @service router;
+
+  @action
+  reset() {
+    this.turn = 0;
+    this.board = Array(9).fill(null);
+    this.winIndexes = [null, null, null];
+    this.isWinDialogOpen = false;
+  }
+
+  @action
+  backToHomeAction() {
+    this.reset();
+    this.router.transitionTo('/');
+  }
+
+  @action
+  restartGameAction() {
+    window.location.reload();
+  }
+
+  @action
+  closeWinDialog() {
+    this.isWinDialogOpen = null;
+  }
 
   @action
   onChangeTurnClick() {
@@ -21,6 +49,7 @@ export default class PlayRouteController extends Controller {
 
     if (result) {
       this.winIndexes = indexes;
+      this.isWinDialogOpen = true;
       return;
     }
 

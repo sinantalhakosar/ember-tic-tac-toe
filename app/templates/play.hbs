@@ -1,13 +1,25 @@
 <Play::Turn @turn={{this.turn}} @onClick={{this.onChangeTurnClick}} />
 
-<div class="grid grid-cols-3 gap-4 mx-96 my-24" data-testid="board">
+<div class="w-4/12 grid grid-cols-3 gap-4 m-auto pt-10" data-testid="board">
   {{#each this.board as |value index|}}
     <Play::Square
       @initialValue={{value}}
       @turn={{this.turn}}
       @index={{index}}
       @winningSquare={{includes index this.winIndexes}}
+      @disabled={{eq this.isWinDialogOpen null}}
       @onClick={{this.onSquareClick}}
     />
   {{/each}}
 </div>
+
+{{#if this.isWinDialogOpen}}
+  <Common::Dialog
+    @text={{concat "Player " (if this.turn "O" "X") " win this game!"}}
+    @primaryActionText="Restart Game"
+    @secondaryActionText="Back to Home"
+    @primaryAction={{this.restartGameAction}}
+    @secondaryAction={{this.backToHomeAction}}
+    @onClose={{this.closeWinDialog}}
+  />
+{{/if}}
