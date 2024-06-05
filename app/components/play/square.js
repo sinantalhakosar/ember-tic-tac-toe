@@ -1,14 +1,22 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
 
 export default class PlaySquareComponent extends Component {
   @tracked value = this.args.initialValue;
 
+  @service toast;
+
   @action
   handleClick() {
+    if (this.args.disabled) {
+      this.toast.error('This game is already over.');
+      return;
+    }
+
     if (this.value !== null) {
-      window.alert('This square is already taken');
+      this.toast.warning('This square already taken!');
       return;
     }
 
