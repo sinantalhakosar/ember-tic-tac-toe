@@ -9,6 +9,10 @@
   }
 }
 
-.body {
+.root {
   @apply h-screen;
+}
+
+.body {
+  @apply h-full pb-32;
 }
