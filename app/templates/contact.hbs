@@ -1,43 +1,57 @@
-<section class="container mx-auto mt-8 flex-grow">
-  <div class="max-w-lg mx-auto p-8 bg-gray-800 rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold mb-4">Get in touch</h1>
-    <div class="mb-4">
-      <p class="text-gray-300">If you have any questions, please feel free to
-        drop me a line. I'll get back to you as soon as I can.</p>
-    </div>
+<div class="flex items-center justify-center">
+  <div
+    class="w-full max-w-sm p-4 border border-gray-700 rounded-lg shadow sm:p-6 bg-transparent mt-24"
+  >
+    <h5
+      class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white text-center"
+    >
+      Connect with me
+    </h5>
+    <ul class="my-4 space-y-3">
+      <li>
+        <a
+          href="https://www.github.com/sinantalhakosar"
+          target="_blank"
+          class="flex items-center p-3 text-base font-bold rounded-lg group hover:shadow bg-gray-800 hover:bg-gray-700 text-white"
+        >
+          <IconifyIcon
+            @icon="ri:github-fill"
+            width="42"
+            height="42"
+            color="white"
+          />
+          <span class="flex-1 ms-3 whitespace-nowrap">Github</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="mailto:sinantalhakosar@gmail.com"
+          class="flex items-center p-3 text-base font-bold rounded-lg group hover:shadow bg-gray-800 hover:bg-gray-700 text-white"
+        >
+          <IconifyIcon
+            @icon="ic:round-email"
+            width="42"
+            height="42"
+            color="white"
+          />
+          <span class="flex-1 ms-3 whitespace-nowrap">Email</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/sinantalhakosar/"
+          target="_blank"
+          class="flex items-center p-3 text-base font-bold rounded-lg group hover:shadow bg-gray-800 hover:bg-gray-700 text-white"
+        >
+          <IconifyIcon
+            @icon="bi:linkedin"
+            width="42"
+            height="42"
+            color="white"
+          />
+          <span class="flex-1 ms-3 whitespace-nowrap">LinkedIn</span>
+        </a>
+      </li>
+    </ul>
   </div>
-</section>
-
-<section class="container mx-auto mt-8">
-  <h2 class="text-2xl font-bold mb-4">Contact links</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-    <div class="bg-gray-800 text-white shadow-md p-6 rounded-lg">
-      <h3 class="text-xl font-bold mb-2">Email</h3>
-      <a
-        href="mailto:sinantalhakosar@gmail.com"
-        class="text-blue-500 hover:underline"
-      >sinantalhakosar@gmail.com</a>
-    </div>
-
-    <div class="bg-gray-800 text-white shadow-md p-6 rounded-lg">
-      <h3 class="text-xl font-bold mb-2">Github</h3>
-      <a
-        href="https://github.com/sinantalhakosar"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-blue-500 hover:underline"
-      >github.com/sinantalhakosar</a>
-    </div>
-
-    <div class="bg-gray-800 text-white shadow-md p-6 rounded-lg">
-      <h3 class="text-xl font-bold mb-2">LinkedIn</h3>
-      <a
-        href="https://www.linkedin.com/in/sinantalhakosar/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-blue-500 hover:underline"
-      >linkedin.com/in/sinantalhakosar</a>
-    </div>
-  </div>
-</section>
+</div>
