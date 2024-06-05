@@ -5,8 +5,19 @@ import { service } from '@ember/service';
 
 export default class PlaySquareComponent extends Component {
   @tracked value = this.args.initialValue;
+  @tracked isHovered = false;
 
   @service toast;
+
+  @action
+  handleMouseOver() {
+    this.isHovered = true;
+  }
+
+  @action
+  handleMouseOut() {
+    this.isHovered = false;
+  }
 
   @action
   handleClick() {
