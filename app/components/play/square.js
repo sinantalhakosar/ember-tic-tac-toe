@@ -16,7 +16,7 @@ export default class PlaySquareComponent extends Component {
     }
 
     if (this.value !== null) {
-      this.toast.warning('This square already taken!');
+      this.toast.warning('This square is already taken!');
       return;
     }
 
