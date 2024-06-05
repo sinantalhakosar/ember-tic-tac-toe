@@ -21,6 +21,40 @@
       >
         Play
       </button>
+
+      <div class="px-2 me-2 mb-2 flex items-center justify-center gap-2">
+        <span
+          class="gap-2 py-2 px-3 text-xl text-white rounded"
+          data-testid="label"
+        >
+          First player is:
+        </span>
+
+        <button
+          class="w-20 h-10 rounded-full bg-slate-300 flex items-center" type="button" {{on "click" this.handleIconClick}}
+        >
+          <div
+            class="flex items-center justify-center w-12 h-12 relative rounded-full transition duration-300
+              {{this.toggleClasses}}"
+          >
+            {{#if (eq this.startingPlayer "X")}}
+              <IconifyIcon
+                @icon="ri:close-line"
+                width="32"
+                height="32"
+                color="#fff"
+              />
+            {{else}}
+              <IconifyIcon
+                @icon="ri:circle-line"
+                width="32"
+                height="32"
+                color="#fff"
+              />
+            {{/if}}
+          </div>
+        </button>
+      </div>
     </div>
 
     <div class="flex items-center justify-center" data-testid="logo">
