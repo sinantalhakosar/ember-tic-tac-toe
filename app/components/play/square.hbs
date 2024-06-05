@@ -1,13 +1,27 @@
 <div
-  class="w-full h-0 pb-full relative border border-white text-center pb-[100%] {{if @winningSquare 'bg-green-800' 'hover:bg-gray-800'}}"
+  class="w-full h-0 relative border border-gray-400 text-center pb-[100%] rounded-lg cursor-pointer
+    {{if @winningSquare 'bg-emerald-800' 'hover:bg-gray-800'}}"
   {{on "click" this.handleClick}}
+  {{on "mouseover" this.handleMouseOver}}
+  {{on "mouseout" this.handleMouseOut}}
   data-testid="square"
 >
-  {{#unless (eq this.value null)}}
-    {{#if (eq this.value 'X')}}
-      <img src="../assets/images/XSymbol.png" class="p-8" />
-    {{else}}
-      <img src="../assets/images/OSymbol.png" class="p-8" />
-    {{/if}}
-  {{/unless}}
+
+  {{#if this.value}}
+    <IconifyIcon
+      @icon={{if (eq this.value "X") "ri:close-large-line" "ri:circle-line"}}
+      width="100%"
+      class="p-4 h-auto"
+      color={{if (eq this.value "X") "#ef4444" "#3b82f6"}}
+    />
+
+  {{else}}
+    <IconifyIcon
+      @icon={{if (eq @turn 0) "ri:close-large-line" "ri:circle-line"}}
+      width="100%"
+      class="p-4 h-auto {{if this.isHovered 'block opacity-30' 'hidden'}}"
+      color={{if (eq @turn 0) "#ef4444" "#3b82f6"}}
+    />
+  {{/if}}
+
 </div>

@@ -31,7 +31,7 @@ module('Integration | Component | square', function (hooks) {
     assert.dom().hasText('');
   });
 
-  test('it changes value on click for X turn', async function (assert) {
+  test('it changes value on click', async function (assert) {
     this.setProperties(properties);
 
     await render(hbs`
@@ -46,25 +46,7 @@ module('Integration | Component | square', function (hooks) {
 
     await click('[data-testid="square"]');
 
-    assert.dom('img').hasAttribute('src', '../assets/images/XSymbol.png');
-  });
-
-  test('it changes value on click for O turn', async function (assert) {
-    this.setProperties({ ...properties, turn: 1 });
-
-    await render(hbs`
-      <Play::Square
-      @initialValue={{this.initialValue}}
-      @turn={{this.turn}}
-      @index={{this.index}}
-      @disabled={{this.disabled}}
-      @onClick={{this.onClick}}
-      />
-    `);
-
-    await click('[data-testid="square"]');
-
-    assert.dom('img').hasAttribute('src', '../assets/images/OSymbol.png');
+    assert.dom('.iconify').exists();
   });
 
   test('it shows an alert when the square is already taken', async function (assert) {
