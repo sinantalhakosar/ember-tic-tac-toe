@@ -9,7 +9,11 @@ module('Acceptance | landing page', function (hooks) {
     await visit('/');
 
     assert.strictEqual(currentURL(), '/');
-    assert.dom('h1').hasText('Tic-Tac-Toe');
+    assert.dom('[data-testid="logo"]').exists();
+
+    assert
+      .dom('[data-testid="description"]')
+      .hasText('Tic-tac-toe, or Xs and Os is a game for two players');
 
     assert.dom('[data-testid="play-button"]').hasText('Play');
     await click('[data-testid="play-button"]');
