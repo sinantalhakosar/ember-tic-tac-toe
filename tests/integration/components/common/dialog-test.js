@@ -4,7 +4,6 @@ import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 const properties = {
-  text: 'Dialog text',
   primaryActionText: 'Yes',
   secondaryActionText: 'No',
   primaryAction: () => {},
@@ -23,16 +22,19 @@ module('Integration | Component | common/dialog', function (hooks) {
       onClose: () => assert.step('onClose'),
     });
 
-    await render(hbs`<Common::Dialog 
-      @text={{this.text}}
-      @primaryActionText={{this.primaryActionText}}
-      @secondaryActionText={{this.secondaryActionText}}
-      @primaryAction={{this.primaryAction}}
-      @secondaryAction={{this.secondaryAction}}
-      @onClose={{this.onClose}}
-    />`);
+    await render(hbs`
+      <Common::Dialog
+        @primaryActionText={{this.primaryActionText}}
+        @secondaryActionText={{this.secondaryActionText}}
+        @primaryAction={{this.primaryAction}}
+        @secondaryAction={{this.secondaryAction}}
+        @onClose={{this.onClose}}
+      >
+        Dialog text
+      </Common::Dialog>
+    `);
 
-    assert.dom('[data-testid="text"]').hasText('Dialog text');
+    assert.dom('[data-testid="content"]').hasText('Dialog text');
     assert.dom('[data-testid="primary-action"]').hasText('Yes');
     assert.dom('[data-testid="secondary-action"]').hasText('No');
 
