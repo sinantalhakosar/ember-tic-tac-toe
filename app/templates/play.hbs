@@ -15,11 +15,13 @@
 
 {{#if this.isWinDialogOpen}}
   <Common::Dialog
-    @text={{concat "Player " (if this.turn "O" "X") " win this game!"}}
-    @primaryActionText="Restart Game"
-    @secondaryActionText="Back to Home"
-    @primaryAction={{this.restartGameAction}}
-    @secondaryAction={{this.backToHomeAction}}
+    @primaryActionText="New game"
+    @primaryAction={{this.newGameAction}}
     @onClose={{this.closeWinDialog}}
-  />
+  >
+    <div class="flex flex-col items-center gap-5">
+      <IconifyIcon @icon="game-icons:party-popper" width="48" height="48" />
+      <h1>Player {{if this.turn "O" "X"}} win this game!</h1>
+    </div>
+  </Common::Dialog>
 {{/if}}

@@ -6,6 +6,7 @@ import { service } from '@ember/service';
 export default class PlayRouteController extends Controller {
   boardSize = 9;
   board = Array(this.boardSize).fill(null);
+
   @tracked turn = 0;
   @tracked winIndexes = [null, null, null];
   @tracked isWinDialogOpen = false;
@@ -27,8 +28,8 @@ export default class PlayRouteController extends Controller {
   }
 
   @action
-  restartGameAction() {
-    window.location.reload();
+  newGameAction() {
+    this.router.transitionTo('/play');
   }
 
   @action
