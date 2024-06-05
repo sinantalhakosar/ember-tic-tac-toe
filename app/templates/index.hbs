@@ -12,13 +12,13 @@
         Play With AI
       </LinkTo>
 
-      <LinkTo
-        @route="play"
+      <button
         class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-800 font-large rounded-lg text-lg px-5 py-2.5 me-2 mb-2 focus:outline-none"
         data-testid="play-button"
+        {{on "click" this.playGame}}
       >
         Play
-      </LinkTo>
+      </button>
     </div>
 
     <div class="flex items-center justify-center" data-testid="logo">
