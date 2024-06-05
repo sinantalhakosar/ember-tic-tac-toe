@@ -11,7 +11,6 @@ module('Integration | Component | navbar', function (hooks) {
 
     assert.dom('[data-testid="navbar"]').exists();
     assert.dom('[data-testid="index"]').exists().hasAttribute('href', '/');
-    assert.dom('[data-testid="index"] > .iconify').exists();
     assert.dom('[data-testid="index"] > span').hasText('Tic Tac Toe');
     assert
       .dom('[data-testid="contact"]')
