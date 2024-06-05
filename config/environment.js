@@ -44,5 +44,7 @@ module.exports = function (environment) {
     // here you can enable a production-specific feature
   }
 
+  ENV.OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
   return ENV;
 };
