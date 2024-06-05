@@ -1,8 +1,13 @@
-<div class="flex items-center justify-center mt-10">
-  <h1
-    class="whitespace-nowrap border rounded-lg p-2 w-[25%] text-center
-      {{if (eq @turn 0) 'bg-red-700' 'bg-blue-700'}}"
+<div class="flex items-center justify-center gap-2">
+  <IconifyIcon
+    @icon={{if (eq @turn 0) "ri:close-large-line" "ri:circle-line"}}
+    width="48"
+    height="48"
+    color={{if (eq @turn 0) "#ef4444" "#3b82f6"}}
+  />
+  <span
+    class="block py-2 px-3 text-xl text-white rounded md:bg-transparent md:p-0"
   >
-    {{this.info}}
-  </h1>
+    Has Turn
+  </span>
 </div>
