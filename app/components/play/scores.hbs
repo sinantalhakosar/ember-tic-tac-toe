@@ -1,0 +1,31 @@
+<div class="flex items-center">
+  <span class="gap-2 py-2 px-3 text-xl text-white rounded md:bg-transparent" data-testid="label">
+    Scores:
+  </span>
+  <div class="flex items-center">
+    <IconifyIcon
+      @icon="ri:close-large-line"
+      width="48"
+      height="48"
+      color="#ef4444"
+      data-testid="score-x-icon"
+    />
+    <span class="gap-2 py-2 px-3 text-xl text-white rounded md:bg-transparent" data-testid="score-x">
+      :
+      {{@scoreX}}
+    </span>
+  </div>
+  <div class="flex items-center">
+    <IconifyIcon
+      @icon="ri:circle-line"
+      width="48"
+      height="48"
+      color="#3b82f6"
+      data-testid="score-o-icon"
+    />
+    <span class="gap-2 py-2 px-3 text-xl text-white rounded md:bg-transparent" data-testid="score-o">
+      :
+      {{@scoreO}}
+    </span>
+  </div>
+</div>
