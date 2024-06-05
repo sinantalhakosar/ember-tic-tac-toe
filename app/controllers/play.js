@@ -18,6 +18,14 @@ export default class PlayRouteController extends Controller {
   constructor() {
     super(...arguments);
     this._initScoresFromLocalStorage();
+
+    let firstPlayingPlayer = localStorage.getItem('firstPlayingPlayer');
+    if (!firstPlayingPlayer) {
+      firstPlayingPlayer = 'X';
+      localStorage.setItem('firstPlayingPlayer', firstPlayingPlayer);
+    }
+
+    this.turn = firstPlayingPlayer === 'X' ? 0 : 1;
   }
 
   _initScoresFromLocalStorage() {
