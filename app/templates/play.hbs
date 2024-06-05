@@ -1,4 +1,19 @@
-<Play::Turn @turn={{this.turn}} @onClick={{this.onChangeTurnClick}} />
+<div class="flex justify-evenly items-center mt-10">
+  <Play::Scores @scoreX={{this.scores.X}} @scoreO={{this.scores.O}}/>
+
+  {{#if (or (eq this.isDrawDialogOpen null) (eq this.isWinDialogOpen null))}}
+    <div class="flex justify-center mt-5">
+      <button
+        class="block py-2 px-3 text-xl text-white rounded bg-sky-800"
+        data-testid="new-game" type="button" {{on "click" this.newGameAction}}
+      >
+        New Game
+      </button>
+    </div>
+  {{else}}
+    <Play::Turn @turn={{this.turn}} />
+  {{/if}}
+</div>
 
 <div class="w-4/12 grid grid-cols-3 gap-4 m-auto pt-10" data-testid="board">
   {{#each this.board as |value index|}}

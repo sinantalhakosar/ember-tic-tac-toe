@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import { action, set } from '@ember/object';
 
 export default class PlayRouteController extends Controller {
   boardSize = 9;
@@ -11,66 +11,39 @@ export default class PlayRouteController extends Controller {
   @tracked winIndexes = [null, null, null];
   @tracked isWinDialogOpen = false;
   @tracked isDrawDialogOpen = false;
+  @tracked scores = { X: 0, O: 0 };
 
   @service router;
 
-  @action
+  constructor() {
+    super(...arguments);
+    this._initScoresFromLocalStorage();
+  }
+
+  _initScoresFromLocalStorage() {
+    const scores = localStorage.getItem('scores');
+
+    if (scores) {
+      this.scores = JSON.parse(scores);
+    }
+  }
+
   reset() {
     this.turn = 0;
     this.board = Array(9).fill(null);
     this.winIndexes = [null, null, null];
     this.isWinDialogOpen = false;
-    this.isDrawDialogOpen = false;
   }
 
-  @action
-  backToHomeAction() {
-    this.reset();
-    this.router.transitionTo('/');
+  _saveScoresToLocalStorage() {
+    localStorage.setItem('scores', JSON.stringify(this.scores));
   }
 
-  @action
-  newGameAction() {
-    this.reset();
-    window.location.reload();
+  _updateScores(winner) {
+    set(this.scores, winner, this.scores[winner] + 1);
+    this._saveScoresToLocalStorage();
   }
 
-  @action
-  closeWinDialog() {
-    this.isWinDialogOpen = null;
-  }
-
-  @action
-  closeDrawDialog() {
-    this.isDrawDialogOpen = null;
-  }
-
-  @action
-  onChangeTurnClick() {
-    this.turn = this.turn ? 0 : 1;
-  }
-
-  @action
-  onSquareClick(player, index) {
-    this.board[index] = player;
-
-    const { result, indexes } = this.calculateWin();
-
-    if (result) {
-      this.winIndexes = indexes;
-      this.isWinDialogOpen = true;
-      return;
-    }
-
-    if (this.board.every((square) => square !== null)) {
-      this.isDrawDialogOpen = true;
-      return;
-    }
-
-    this.turn = this.turn ? 0 : 1;
-  }
-
-  @action
   calculateWin() {
     const horizontal = this.calculateHorizontalWin();
     const vertical = this.calculateVerticalWin();
@@ -91,7 +64,6 @@ export default class PlayRouteController extends Controller {
     return { result: false };
   }
 
-  @action
   calculateHorizontalWin() {
     let win = [null, null, null];
     let player = null;
@@ -115,7 +87,6 @@ export default class PlayRouteController extends Controller {
     return { result: false, indexes: [null, null, null], player: null };
   }
 
-  @action
   calculateVerticalWin() {
     let win = [null, null, null];
     let player = null;
@@ -138,7 +109,6 @@ export default class PlayRouteController extends Controller {
     return { result: false, indexes: [null, null, null], player: null };
   }
 
-  @action
   calculateDiagonalWin() {
     let win = [null, null, null];
     let player = this.board[0];
@@ -172,5 +142,42 @@ export default class PlayRouteController extends Controller {
         return { result: true, indexes: win, player };
     }
     return { result: false, indexes: [null, null, null], player: null };
+  }
+
+  @action
+  newGameAction() {
+    this.reset();
+    window.location.reload();
+  }
+
+  @action
+  closeWinDialog() {
+    this.isWinDialogOpen = null;
+  }
+
+  @action
+  closeDrawDialog() {
+    this.isDrawDialogOpen = null;
+  }
+
+  @action
+  onSquareClick(player, index) {
+    this.board[index] = player;
+
+    const { result, indexes, player: winningPlayer } = this.calculateWin();
+
+    if (result) {
+      this._updateScores(winningPlayer);
+      this.winIndexes = indexes;
+      this.isWinDialogOpen = true;
+      return;
+    }
+
+    if (this.board.every((square) => square !== null)) {
+      this.isDrawDialogOpen = true;
+      return;
+    }
+
+    this.turn = this.turn ? 0 : 1;
   }
 }
