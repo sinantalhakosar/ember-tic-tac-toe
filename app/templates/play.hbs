@@ -7,7 +7,10 @@
       @turn={{this.turn}}
       @index={{index}}
       @winningSquare={{includes index this.winIndexes}}
-      @disabled={{eq this.isWinDialogOpen null}}
+      @disabled={{or
+        (eq this.isWinDialogOpen null)
+        (eq this.isDrawDialogOpen null)
+      }}
       @onClick={{this.onSquareClick}}
     />
   {{/each}}
@@ -22,6 +25,19 @@
     <div class="flex flex-col items-center gap-5">
       <IconifyIcon @icon="game-icons:party-popper" width="48" height="48" />
       <h1>Player {{if this.turn "O" "X"}} win this game!</h1>
+    </div>
+  </Common::Dialog>
+{{/if}}
+
+{{#if this.isDrawDialogOpen}}
+  <Common::Dialog
+    @primaryActionText="New Game"
+    @primaryAction={{this.newGameAction}}
+    @onClose={{this.closeDrawDialog}}
+  >
+    <div class="flex flex-col items-center gap-5">
+      <IconifyIcon @icon="mdi:equal" width="48" height="48" />
+      <h1>No one wins!</h1>
     </div>
   </Common::Dialog>
 {{/if}}

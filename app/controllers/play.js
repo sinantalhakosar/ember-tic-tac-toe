@@ -10,6 +10,7 @@ export default class PlayRouteController extends Controller {
   @tracked turn = 0;
   @tracked winIndexes = [null, null, null];
   @tracked isWinDialogOpen = false;
+  @tracked isDrawDialogOpen = false;
 
   @service router;
 
@@ -19,6 +20,7 @@ export default class PlayRouteController extends Controller {
     this.board = Array(9).fill(null);
     this.winIndexes = [null, null, null];
     this.isWinDialogOpen = false;
+    this.isDrawDialogOpen = false;
   }
 
   @action
@@ -29,12 +31,18 @@ export default class PlayRouteController extends Controller {
 
   @action
   newGameAction() {
-    this.router.transitionTo('/play');
+    this.reset();
+    window.location.reload();
   }
 
   @action
   closeWinDialog() {
     this.isWinDialogOpen = null;
+  }
+
+  @action
+  closeDrawDialog() {
+    this.isDrawDialogOpen = null;
   }
 
   @action
@@ -51,6 +59,11 @@ export default class PlayRouteController extends Controller {
     if (result) {
       this.winIndexes = indexes;
       this.isWinDialogOpen = true;
+      return;
+    }
+
+    if (this.board.every((square) => square !== null)) {
+      this.isDrawDialogOpen = true;
       return;
     }
 
