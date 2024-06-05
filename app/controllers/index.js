@@ -19,4 +19,12 @@ export default class IndexController extends Controller {
     this._initScoresFromLocalStorage();
     this.router.transitionTo('play').then(() => window.location.reload());
   }
+
+  @action
+  playGameWithAI() {
+    this._initScoresFromLocalStorage();
+    this.router
+      .transitionTo('play-with-ai')
+      .then(() => window.location.reload());
+  }
 }
