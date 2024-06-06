@@ -11,10 +11,10 @@ module('Integration | Component | play/scores', function (hooks) {
 
     assert.dom('[data-testid="label"]').hasText('Scores:');
 
-    assert.dom('[data-testid="score-x"]').hasText(': 3');
+    assert.dom('[data-testid="score-x"]').hasText('3');
     assert.dom('[data-testid="score-x-icon"]').exists();
 
-    assert.dom('[data-testid="score-o"]').hasText(': 2');
+    assert.dom('[data-testid="score-o"]').hasText('2');
     assert.dom('[data-testid="score-o-icon"]').exists();
   });
 });
