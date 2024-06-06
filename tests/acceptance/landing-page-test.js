@@ -16,6 +16,8 @@ module('Acceptance | landing page', function (hooks) {
       .hasText('Tic-tac-toe, or Xs and Os is a game for two players');
 
     assert.dom('[data-testid="play-button"]').hasText('Play');
-    assert.dom('[data-testid="play-with-ai-button"]').hasText('Play With AI');
+    assert
+      .dom('[data-testid="play-with-ai-button"]')
+      .hasText('Play Against AI');
   });
 });
