@@ -6,8 +6,10 @@ import { tracked } from '@glimmer/tracking';
 export default class IndexController extends Controller {
   @tracked startingPlayer = 'X';
   @tracked toggleClasses = 'bg-red-500 -translate-x-2';
+  @tracked playWithAIEnabled = false;
 
   @service router;
+  @service openAiEnabled;
 
   constructor() {
     super(...arguments);
@@ -21,6 +23,8 @@ export default class IndexController extends Controller {
       startingPlayer === 'X'
         ? 'bg-red-500 -translate-x-2'
         : 'bg-blue-500 translate-x-full';
+
+    this.playWithAIEnabled = this.openAiEnabled.isAIEnabled();
   }
 
   _initScoresFromLocalStorage() {
