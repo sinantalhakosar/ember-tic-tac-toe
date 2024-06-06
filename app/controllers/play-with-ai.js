@@ -16,9 +16,11 @@ export default class PlayWithAiController extends Controller {
   @tracked isDrawDialogOpen = false;
   @tracked scores = { X: 0, O: 0 };
   @tracked loading = false;
+  @tracked playWithAIEnabled = false;
 
   @service router;
   @service openaiBot;
+  @service openAiEnabled;
 
   constructor() {
     super(...arguments);
@@ -31,6 +33,7 @@ export default class PlayWithAiController extends Controller {
     }
 
     this.turn = firstPlayingPlayer === 'X' ? 0 : 1;
+    this.playWithAIEnabled = this.openAiEnabled.isAIEnabled();
   }
 
   _initScoresFromLocalStorage() {

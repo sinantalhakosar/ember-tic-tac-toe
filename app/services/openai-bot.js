@@ -1,8 +1,14 @@
-import Service from '@ember/service';
+import Service, { service } from '@ember/service';
 import ENV from 'ember-tic-tac-toe/config/environment';
 
 export default class OpenaiBotService extends Service {
+  @service openAiEnabled;
+
   getOpenAIBotSystemPrompt() {
+    if (!this.openAiEnabled.isAIEnabled()) {
+      return;
+    }
+
     let firstPlayingPlayer = localStorage.getItem('firstPlayingPlayer');
     if (firstPlayingPlayer === null) {
       firstPlayingPlayer = 'X'; // Set to default
@@ -36,6 +42,10 @@ Here are the instructions for your response:
   }
 
   async getBotMove(board) {
+    if (!this.openAiEnabled.isAIEnabled()) {
+      return;
+    }
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -63,6 +73,10 @@ Here are the instructions for your response:
   }
 
   parseResponse(response) {
+    if (!this.openAiEnabled.isAIEnabled()) {
+      return;
+    }
+
     try {
       return JSON.parse(response.trim());
     } catch (error) {
