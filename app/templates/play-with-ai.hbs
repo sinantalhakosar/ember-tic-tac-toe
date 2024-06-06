@@ -45,8 +45,8 @@
       @onClose={{this.closeWinDialog}}
     >
       <div class="flex flex-col items-center gap-5">
-        <IconifyIcon @icon="game-icons:party-popper" width="48" height="48" />
-        <h1>Player {{if this.turn "O" "X"}} win this game!</h1>
+        <IconifyIcon @icon="bxs:trophy" width="48" height="48" />
+        <h1>Player {{if this.turn "O" "X"}} won!</h1>
       </div>
     </Common::Dialog>
   {{/if}}
@@ -58,8 +58,8 @@
       @onClose={{this.closeDrawDialog}}
     >
       <div class="flex flex-col items-center gap-5">
-        <IconifyIcon @icon="mdi:equal" width="48" height="48" />
-        <h1>No one wins!</h1>
+        <IconifyIcon @icon="ri:shake-hands-fill" width="48" height="48" />
+        <h1>Its a draw!</h1>
       </div>
     </Common::Dialog>
   {{/if}}
@@ -73,9 +73,8 @@
         <p
           class="mb-4 text-3xl tracking-tight font-bold md:text-4xl text-white"
         >Something's missing.</p>
-        <p
-          class="mb-10 text-lg font-light text-gray-400"
-        >Sorry, we can't open this page. You'll need an OpenAI key.
+        <p class="mb-10 text-lg font-light text-gray-400">
+          Sorry, we can't open this page. You'll need an OpenAI key.
         </p>
         <LinkTo
           @route="index"

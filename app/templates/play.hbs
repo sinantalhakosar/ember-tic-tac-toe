@@ -1,11 +1,13 @@
 <div class="flex justify-evenly items-center mt-10">
-  <Play::Scores @scoreX={{this.scores.X}} @scoreO={{this.scores.O}}/>
+  <Play::Scores @scoreX={{this.scores.X}} @scoreO={{this.scores.O}} />
 
   {{#if (or (eq this.isDrawDialogOpen null) (eq this.isWinDialogOpen null))}}
     <div class="flex justify-center mt-5">
       <button
         class="block py-2 px-3 text-xl text-white rounded bg-sky-800"
-        data-testid="new-game" type="button" {{on "click" this.newGameAction}}
+        data-testid="new-game"
+        type="button"
+        {{on "click" this.newGameAction}}
       >
         New Game
       </button>
@@ -38,8 +40,8 @@
     @onClose={{this.closeWinDialog}}
   >
     <div class="flex flex-col items-center gap-5">
-      <IconifyIcon @icon="game-icons:party-popper" width="48" height="48" />
-      <h1>Player {{if this.turn "O" "X"}} win this game!</h1>
+      <IconifyIcon @icon="bxs:trophy" width="48" height="48" />
+      <h1>Player {{if this.turn "O" "X"}} won!</h1>
     </div>
   </Common::Dialog>
 {{/if}}
@@ -51,8 +53,8 @@
     @onClose={{this.closeDrawDialog}}
   >
     <div class="flex flex-col items-center gap-5">
-      <IconifyIcon @icon="mdi:equal" width="48" height="48" />
-      <h1>No one wins!</h1>
+      <IconifyIcon @icon="ri:shake-hands-fill" width="48" height="48" />
+      <h1>Its a draw!</h1>
     </div>
   </Common::Dialog>
 {{/if}}
