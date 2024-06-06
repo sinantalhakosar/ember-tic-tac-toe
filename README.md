@@ -22,7 +22,6 @@ You will need the following things properly installed on your computer.
 
 * `npm run start`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
 ### Code Generators
 
@@ -45,7 +44,11 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+Currently deployed to `https://luxury-kitsune-442325.netlify.app` 
+
+Play against AI open is not available since there is no BE side yet and api key will be exposed
+
+Until backend is there you can ask owner of this repo to open up for you.
 
 ## Further Reading / Useful Links
 
