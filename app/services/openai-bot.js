@@ -72,8 +72,8 @@ Here are the instructions for your response:
       );
 
       const data = await response.json();
-
       const updatedBoard = this.parseResponse(data.choices[0].message.content);
+
       return updatedBoard;
     } catch (error) {
       this.toast.error(
