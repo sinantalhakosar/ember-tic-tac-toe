@@ -3,6 +3,7 @@ import ENV from 'ember-tic-tac-toe/config/environment';
 
 export default class OpenaiBotService extends Service {
   @service openAiEnabled;
+  @service toast;
 
   getOpenAIBotSystemPrompt() {
     if (!this.openAiEnabled.isAIEnabled()) {
@@ -46,30 +47,41 @@ Here are the instructions for your response:
       return;
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${encodeURIComponent(ENV.OPENAI_API_KEY)}`,
-      },
-      body: JSON.stringify({
-        model: 'gpt-4-turbo',
-        messages: [
-          { role: 'system', content: this.getOpenAIBotSystemPrompt() },
-          { role: 'user', content: JSON.stringify(board) },
-        ],
-        temperature: 1,
-        max_tokens: 500,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      }),
-    });
+    try {
+      const response = await fetch(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${encodeURIComponent(ENV.OPENAI_API_KEY)}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-4-turbo',
+            messages: [
+              { role: 'system', content: this.getOpenAIBotSystemPrompt() },
+              { role: 'user', content: JSON.stringify(board) },
+            ],
+            temperature: 1,
+            max_tokens: 500,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          }),
+        },
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    const updatedBoard = this.parseResponse(data.choices[0].message.content);
-    return updatedBoard;
+      const updatedBoard = this.parseResponse(data.choices[0].message.content);
+      return updatedBoard;
+    } catch (error) {
+      this.toast.error(
+        'There is some problem with the AI. Please contact with the developer.',
+      );
+
+      return { index: null, value: null };
+    }
   }
 
   parseResponse(response) {
