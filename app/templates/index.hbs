@@ -31,13 +31,19 @@
         </span>
 
         <button
-          class="w-20 h-10 rounded-full bg-slate-300 flex items-center" type="button" {{on "click" this.handleIconClick}}
+          class="w-20 h-10 rounded-full bg-slate-300 flex items-center"
+          type="button"
+          {{on "click" this.handleIconClick}}
         >
           <div
             class="flex items-center justify-center w-12 h-12 relative rounded-full transition duration-300
-              {{this.toggleClasses}}"
+              {{if
+                (eq this.game.startingPlayer 'X')
+                'bg-red-500 -translate-x-2'
+                'bg-blue-500 translate-x-full'
+              }}"
           >
-            {{#if (eq this.startingPlayer "X")}}
+            {{#if (eq this.game.startingPlayer 'X')}}
               <IconifyIcon
                 @icon="ri:close-line"
                 width="32"

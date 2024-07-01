@@ -6,139 +6,290 @@ module('Unit | Controller | play', function (hooks) {
 
   test('it opens dialog on win', function (assert) {
     let controller = this.owner.lookup('controller:play');
+    let service = this.owner.lookup('service:game');
 
-    controller.set('board', ['X', 'X', null, 'O', 'O', null, null, null, null]);
-    controller.set('turn', 'X');
-    controller.set('winIndexes', [null, null, null]);
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'X' },
+      { index: 2, value: null },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: null },
+      { index: 8, value: null },
+    ]);
+
+    service.set('turn', 0);
+    service.set('winIndexes', [null, null, null]);
 
     controller.onSquareClick('X', 2);
 
-    assert.true(
-      controller.get('isWinDialogOpen'),
-      'Dialog should be open on win',
-    );
+    assert.true(service.isWin, 'isWin should return true');
   });
 
   test('it does not open dialog on no win', function (assert) {
     let controller = this.owner.lookup('controller:play');
+    let service = this.owner.lookup('service:game');
 
-    controller.set('board', ['X', 'X', null, 'O', 'O', null, null, null, null]);
-    controller.set('turn', 'X');
-    controller.set('winIndexes', [null, null, null]);
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'X' },
+      { index: 2, value: null },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: null },
+      { index: 8, value: null },
+    ]);
+
+    service.set('turn', 0);
+    service.set('winIndexes', [null, null, null]);
 
     controller.onSquareClick('X', 8);
 
-    assert.false(
-      controller.get('isWinDialogOpen'),
-      'Dialog should not be open on no win',
-    );
+    assert.false(service.isWin, 'isWin should return false');
   });
 
   test('calculateHorizontalWin works correctly', function (assert) {
-    let controller = this.owner.lookup('controller:play');
-    controller.board = ['X', 'X', 'X', 'O', 'O', null, null, null, null];
-    controller.boardSize = 9;
-    let result = controller.calculateHorizontalWin();
-    assert.deepEqual(result, { indexes: [0, 1, 2], result: true, player: 'X' });
+    let service = this.owner.lookup('service:game');
+
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'X' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: null },
+      { index: 8, value: null },
+    ]);
+    service.boardSize = 9;
+    let result = service.calculateHorizontalWin();
+    assert.true(result, 'should return true');
 
     // no win case
-    controller.board = ['X', 'O', 'X', 'O', 'O', 'X', 'X', 'X', 'O'];
-    result = controller.calculateHorizontalWin();
-    assert.deepEqual(result, {
-      indexes: [null, null, null],
-      result: false,
-      player: null,
-    });
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: 'X' },
+      { index: 6, value: 'X' },
+      { index: 7, value: 'X' },
+      { index: 8, value: 'O' },
+    ]);
+    result = service.calculateHorizontalWin();
+    assert.false(result, 'should return false');
 
     // Buggy case: no win
-    controller.board = ['X', 'O', 'X', 'O', 'X', null, null, 'O', null];
-    result = controller.calculateHorizontalWin();
-    assert.deepEqual(result, {
-      indexes: [null, null, null],
-      result: false,
-      player: null,
-    });
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: 'O' },
+      { index: 8, value: null },
+    ]);
+    result = service.calculateHorizontalWin();
+    assert.false(result, 'should return false');
   });
 
   test('calculateVerticalWin works correctly', function (assert) {
-    let controller = this.owner.lookup('controller:play');
-    controller.board = ['X', 'O', null, 'X', 'O', null, 'X', null, null];
-    controller.boardSize = 9;
-    let result = controller.calculateVerticalWin();
-    assert.deepEqual(result, { indexes: [0, 3, 6], result: true, player: 'X' });
+    let service = this.owner.lookup('service:game');
+
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: null },
+      { index: 3, value: 'X' },
+      { index: 4, value: 'O' },
+      { index: 5, value: null },
+      { index: 6, value: 'X' },
+      { index: 7, value: null },
+      { index: 8, value: null },
+    ]);
+
+    service.boardSize = 9;
+    let result = service.calculateVerticalWin();
+    assert.true(result, 'should return true');
 
     // no win case
-    controller.board = ['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X'];
-    result = controller.calculateVerticalWin();
-    assert.deepEqual(result, {
-      indexes: [null, null, null],
-      result: false,
-      player: null,
-    });
+    service.board = ['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X'];
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: 'O' },
+      { index: 6, value: 'X' },
+      { index: 7, value: 'O' },
+      { index: 8, value: 'X' },
+    ]);
+    result = service.calculateVerticalWin();
+    assert.false(result, 'should return false');
 
     // Buggy case: no win
-    controller.board = ['X', 'O', 'X', 'O', 'X', null, null, 'O', null];
-    result = controller.calculateVerticalWin();
-    assert.deepEqual(result, {
-      indexes: [null, null, null],
-      result: false,
-      player: null,
-    });
+    service.board = ['X', 'O', 'X', 'O', 'X', null, null, 'O', null];
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: 'O' },
+      { index: 8, value: null },
+    ]);
+    result = service.calculateVerticalWin();
+    assert.false(result, 'should return false');
   });
 
   test('calculateDiagonalWin works correctly', function (assert) {
-    let controller = this.owner.lookup('controller:play');
-    controller.board = ['X', 'O', null, 'O', 'X', null, null, null, 'X'];
-    controller.boardSize = 9;
-    let result = controller.calculateDiagonalWin();
-    assert.deepEqual(result, { indexes: [0, 4, 8], result: true, player: 'X' });
+    let service = this.owner.lookup('service:game');
+
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: null },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: null },
+      { index: 8, value: 'X' },
+    ]);
+    service.boardSize = 9;
+    let result = service.calculateDiagonalWin();
+    assert.true(result, 'should return true');
 
     // no win case
-    controller.board = ['X', 'O', 'X', 'O', 'O', 'X', 'X', 'X', 'O'];
-    result = controller.calculateDiagonalWin();
-    assert.deepEqual(result, {
-      indexes: [null, null, null],
-      result: false,
-      player: null,
-    });
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: 'X' },
+      { index: 6, value: 'X' },
+      { index: 7, value: 'X' },
+      { index: 8, value: 'O' },
+    ]);
+    result = service.calculateDiagonalWin();
+    assert.false(result, 'should return false');
 
     // Buggy case: no win
-    controller.board = ['X', 'O', 'X', 'O', 'X', null, null, 'O', null];
-    result = controller.calculateDiagonalWin();
-    assert.deepEqual(result, {
-      indexes: [null, null, null],
-      result: false,
-      player: null,
-    });
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: 'O' },
+      { index: 8, value: null },
+    ]);
+    result = service.calculateDiagonalWin();
+    assert.false(result, 'should return false');
   });
 
-  test('calculateWin works correctly', function (assert) {
-    let controller = this.owner.lookup('controller:play');
+  test('calculateResult works correctly', function (assert) {
+    let service = this.owner.lookup('service:game');
 
     // Horizontal win
-    controller.board = ['X', 'X', 'X', 'O', 'O', null, null, null, null];
-    controller.boardSize = 9;
-    let result = controller.calculateWin();
-    assert.deepEqual(result, { indexes: [0, 1, 2], result: true, player: 'X' });
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'X' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: null },
+      { index: 8, value: null },
+    ]);
+    service.boardSize = 9;
+    let result = service.calculateResult();
+    assert.true(result, 'should return true');
 
     // Vertical win
-    controller.board = ['X', 'O', null, 'X', 'O', null, 'X', null, null];
-    result = controller.calculateWin();
-    assert.deepEqual(result, { indexes: [0, 3, 6], result: true, player: 'X' });
+    service.isWin = false;
+    service.isDraw = false;
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: null },
+      { index: 3, value: 'X' },
+      { index: 4, value: 'O' },
+      { index: 5, value: null },
+      { index: 6, value: 'X' },
+      { index: 7, value: null },
+      { index: 8, value: null },
+    ]);
+    result = service.calculateResult();
+    assert.true(result, 'should return true');
 
     // Diagonal win
-    controller.board = ['X', 'O', null, 'O', 'X', null, null, null, 'X'];
-    result = controller.calculateWin();
-    assert.deepEqual(result, { indexes: [0, 4, 8], result: true, player: 'X' });
+    service.isWin = false;
+    service.isDraw = false;
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: null },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: null },
+      { index: 8, value: 'X' },
+    ]);
+    result = service.calculateResult();
+    assert.true(result, 'should return true');
 
     // no win case
-    controller.board = ['X', 'O', 'X', 'O', 'O', 'X', 'X', 'X', 'O'];
-    result = controller.calculateWin();
-    assert.deepEqual(result, { result: false });
+    // but draw
+    service.isWin = false;
+    service.isDraw = false;
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'O' },
+      { index: 5, value: 'X' },
+      { index: 6, value: 'X' },
+      { index: 7, value: 'X' },
+      { index: 8, value: 'O' },
+    ]);
+    result = service.calculateResult();
+    assert.true(result, 'should return true [draw]');
+    assert.false(service.isWin, 'isWin should return false');
+    assert.true(service.isDraw, 'isDraw should return true');
 
     // Buggy case: no win
-    controller.board = ['X', 'O', 'X', 'O', 'X', null, null, 'O', null];
-    result = controller.calculateWin();
-    assert.deepEqual(result, { result: false });
+    service.isWin = false;
+    service.isDraw = false;
+    service.set('board', [
+      { index: 0, value: 'X' },
+      { index: 1, value: 'O' },
+      { index: 2, value: 'X' },
+      { index: 3, value: 'O' },
+      { index: 4, value: 'X' },
+      { index: 5, value: null },
+      { index: 6, value: null },
+      { index: 7, value: 'O' },
+      { index: 8, value: null },
+    ]);
+    result = service.calculateResult();
+    assert.false(result, 'should return false');
   });
 });
