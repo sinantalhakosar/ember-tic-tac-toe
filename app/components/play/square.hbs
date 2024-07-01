@@ -1,6 +1,9 @@
+{{!-- eslint-disable-next-line require-presentational-children --}}
 <div
   class="w-full h-0 relative border border-gray-400 text-center pb-[100%] rounded-lg cursor-pointer
     {{if @winningSquare 'bg-emerald-800' 'hover:bg-gray-800'}}"
+  role="button"
+  tabindex="0"
   {{on "click" this.handleClick}}
   {{on "mouseover" this.handleMouseOver}}
   {{on "mouseout" this.handleMouseOut}}
@@ -13,6 +16,8 @@
       width="100%"
       class="p-4 h-auto"
       color={{if (eq this.value "X") "#ef4444" "#3b82f6"}}
+      aria-hidden="true"
+      role="presentation"
     />
 
   {{else}}
@@ -21,6 +26,8 @@
       width="100%"
       class="p-4 h-auto {{if this.isHovered 'block opacity-30' 'hidden'}}"
       color={{if (eq @turn 0) "#ef4444" "#3b82f6"}}
+      aria-hidden="true"
+      role="presentation"
     />
   {{/if}}
 
