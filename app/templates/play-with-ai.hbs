@@ -1,12 +1,12 @@
-{{#if this.playWithAIEnabled}}
-  {{#if this.loading}}
+{{#if this.openaiBot.playWithAIEnabled}}
+  {{#if this.openaiBot.loading}}
     <Common::Loader @text="Thinking..." />
   {{/if}}
 
   <div class="flex justify-evenly items-center mt-10">
-    <Play::Scores @scoreX={{this.scores.X}} @scoreO={{this.scores.O}} />
+    <Play::Scores @scoreX={{this.score.scores.X}} @scoreO={{this.score.scores.O}} />
 
-    {{#if (or (eq this.isDrawDialogOpen null) (eq this.isWinDialogOpen null))}}
+    {{#if (or (eq this.game.isDraw null) (eq this.game.isWin null))}}
       <div class="flex justify-center mt-5">
         <button
           class="block py-2 px-3 text-xl text-white rounded bg-sky-800"
@@ -18,27 +18,27 @@
         </button>
       </div>
     {{else}}
-      <Play::Turn @turn={{this.turn}} />
+      <Play::Turn @turn={{this.game.turn}} />
     {{/if}}
   </div>
 
   <div class="w-4/12 grid grid-cols-3 gap-4 m-auto pt-10" data-testid="board">
-    {{#each this.board as |item|}}
+    {{#each this.game.board as |item|}}
       <Play::Square
         @initialValue={{item.value}}
-        @turn={{this.turn}}
+        @turn={{this.game.turn}}
         @index={{item.index}}
-        @winningSquare={{includes item.index this.winIndexes}}
+        @winningSquare={{includes item.index this.game.winIndexes}}
         @disabled={{or
-          (eq this.isWinDialogOpen null)
-          (eq this.isDrawDialogOpen null)
+          (eq this.game.isWin null)
+          (eq this.game.isDraw null)
         }}
         @onClick={{this.onSquareClick}}
       />
     {{/each}}
   </div>
 
-  {{#if this.isWinDialogOpen}}
+  {{#if this.game.isWin}}
     <Common::Dialog
       @primaryActionText="New game"
       @primaryAction={{this.newGameAction}}
@@ -46,12 +46,12 @@
     >
       <div class="flex flex-col items-center gap-5">
         <IconifyIcon @icon="bxs:trophy" width="48" height="48" />
-        <h1>Player {{if this.turn "O" "X"}} won!</h1>
+        <h1>Player {{if this.game.turn "O" "X"}} won!</h1>
       </div>
     </Common::Dialog>
   {{/if}}
 
-  {{#if this.isDrawDialogOpen}}
+  {{#if this.game.isDraw}}
     <Common::Dialog
       @primaryActionText="New Game"
       @primaryAction={{this.newGameAction}}
