@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import ENV from 'ember-tic-tac-toe/config/environment';
 
 export default class PlayWithAiController extends Controller {
   @service router;
@@ -12,7 +11,6 @@ export default class PlayWithAiController extends Controller {
   constructor() {
     super(...arguments);
     this.game.turn = this.game.startingPlayer === 'X' ? 0 : 1;
-    this.openaiBot.playWithAIEnabled = ENV.OPENAI_API_KEY !== undefined;
   }
 
   @action
