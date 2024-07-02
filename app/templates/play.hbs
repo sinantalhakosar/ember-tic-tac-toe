@@ -1,4 +1,4 @@
-<div class="flex justify-evenly items-center mt-10">
+<div class="flex justify-evenly items-center mt-10 flex-wrap flex-col-reverse gap-4 sm:flex-row sm:gap-0">
   <Play::Scores @scoreX={{this.score.scores.X}} @scoreO={{this.score.scores.O}} />
 
   {{#if (or (eq this.game.isDraw null) (eq this.game.isWin null))}}
@@ -17,7 +17,7 @@
   {{/if}}
 </div>
 
-<div class="w-4/12 grid grid-cols-3 gap-4 m-auto pt-10" data-testid="board">
+<div class="w-10/12 sm:w-4/12 grid grid-cols-3 gap-4 mx-auto 2xl:m-auto pt-10" data-testid="board">
   {{#each this.game.board as |item|}}
     <Play::Square
       @initialValue={{item.value}}

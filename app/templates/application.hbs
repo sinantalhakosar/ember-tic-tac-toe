@@ -1,8 +1,8 @@
 <div class="root">
+  <Common::Toast />
+  {{! body section }}
+  <div class="body flex flex-col">
     <Common::Navbar />
-    <Common::Toast />
-    {{!-- body section --}}
-    <div class="body">
-       {{outlet}}
-    </div>
+    {{outlet}}
+  </div>
 </div>

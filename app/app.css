@@ -14,5 +14,5 @@
 }
 
 .body {
-  @apply h-full pb-32;
+  @apply h-full;
 }
