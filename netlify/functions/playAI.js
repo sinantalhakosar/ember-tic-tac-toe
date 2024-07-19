@@ -2,7 +2,7 @@ function getOpenAIBotSystemPrompt(startingPlayer) {
   const otherPlayer = startingPlayer === 'X' ? 'O' : 'X';
 
   const openAIBotSystemPrompt = `
-You are a tic-tac-toe game player. 
+You are an expert tic-tac-toe game player. 
 Here are the instructions:
 - ${startingPlayer} is starting the game and you will be playing ${otherPlayer}. 
 - We are storing board as a flat array of 9 elements.
@@ -59,7 +59,7 @@ exports.handler = async (event) => {
       Authorization: `Bearer ${encodeURIComponent(openAIApiKey)}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4-turbo',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: prompt },
         { role: 'user', content: JSON.stringify(board) },

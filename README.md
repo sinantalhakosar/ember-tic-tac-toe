@@ -1,7 +1,16 @@
 # ember-tic-tac-toe
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This project is a Tic Tac Toe game built with EmberJS. It includes two modes:
+
+Play Mode: Two players take turns to play the game.
+Play Against AI Mode: A single player competes against an AI opponent.
+
+## Features
+
+User Interface: Clean and responsive UI for an enjoyable gaming experience.
+Two-player Mode: Standard Tic Tac Toe game where two players alternate turns.
+AI Opponent: Uses the OpenAI API to generate moves for the AI
+
 
 ## Prerequisites
 
@@ -20,7 +29,7 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `npm run start`
+* `npm run start` or with functions `netlify dev`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
@@ -44,11 +53,10 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-Currently deployed to `https://luxury-kitsune-442325.netlify.app` 
+Currently deployed to `https://playonline-tictactoe.netlify.app` 
 
-Play against AI open is not available since there is no BE side yet and api key will be exposed
 
-Until backend is there you can ask owner of this repo to open up for you.
+If you face any problem with `Play against AI` you can ask owner of this repo.
 
 ## Further Reading / Useful Links
 
